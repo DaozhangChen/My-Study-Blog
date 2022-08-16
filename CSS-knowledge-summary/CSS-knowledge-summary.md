@@ -12,7 +12,7 @@
 * Paint绘制（边框颜色、文字颜色、阴影画出来）
 * Compose合成（根据层叠关系展示画面） 
 首先，我们应该要理解树是什么概念，下面放张图就可以非常清楚的知道了：
-![树图](/picture/树图.png)
+![树图](./picture/树图.png)
 如上图中所示，通过分叉图的方式，将html与css中的标签和属性的父子关系展现出来的分叉形式，就是DOM树。  
 浏览器通过收到的html和css代码，分解成这样的两棵树后，再对其进行合并，成为渲染树（render tree），之后又会计算其中文档流、盒模型的大小和位置，计算完成后则会对文档流、盒模型等进行上色处理，处理完成后则是会对所有内容根据它的层叠关系来展示画面，这也就是我们看到的画面。
 以上内容是参考这篇文章：https://web.dev/critical-rendering-path-render-tree-construction/， 大家也可以去了解一下。
@@ -34,13 +34,13 @@ transform:translate(x,y);(填写向X,Y轴的移动距离，控制移动)
 transform:translate3d(x,y,z);
 ```
 向X轴移动动画如下：
-![](/picture/translateX.gif)  
+![](./picture/translateX.gif)  
 下面要重点讲述如何向Z轴移动，首先需要一个父容器定义一个视点，下面我在这个黑色框中的中心定义一个离用户垂直距离为100像素的视点，其中红色框为黑色框的子元素,设置红色框向Z轴方向上移动50px。
-![](/picture/transplateZ.png)
+![](./picture/transplateZ.png)
 效果如下所示：
-![](/picture/Z轴.gif)  
+![](./picture/Z轴.gif)  
 这样看起来红色框离我们的距离越来越近，逐渐放大，当Z轴数值为负数时，则会向下移动，看起来越来越小。
-![](/picture/Z轴下.gif)  
+![](./picture/Z轴下.gif)  
 **注意：放大的同时，连边框都会等比例放大。**
 #### scale 缩放
 scale有以下几种用法：
@@ -51,9 +51,9 @@ transform:scaleY(1.5);（纵向放大1.5倍）
 ```
 X轴和Y轴放大如下所示：  
 X轴放大  
-![](/picture/scaleX.gif)  
+![](./picture/scaleX.gif)  
 Y轴放大
-![](/picture/scaleY.gif)
+![](./picture/scaleY.gif)
 #### rotate 旋转
 rotate用法如下：
 ```css
@@ -62,11 +62,11 @@ transform:rotateX(45deg);(沿着X轴顺时针旋转45°)
 transform:rotateY(45deg);(沿着y轴顺时针旋转45°)
 ```
 Z轴旋转图如下：  
-![](/picture/rotateZ.gif)
+![](./picture/rotateZ.gif)
 X轴旋转图如下：
-![](/picture/rotateX.gif)
+![](./picture/rotateX.gif)
 Y轴旋转图如下：
-![](/picture/rotateY.gif)
+![](./picture/rotateY.gif)
 #### skew 倾斜
 skew用法如下：
 ```css
@@ -75,7 +75,7 @@ skewY(15deg);（往y轴方向倾斜15度）
 skew(15deg,25deg);（往x轴方向倾斜15度，往y轴方向倾斜25度）
 ```
 以下只示范向X轴倾斜:
-![](/picture/skewX.gif)
+![](./picture/skewX.gif)
 #### 重要补充
 需要完成动画，**必须**加上一句话（transition称为过渡）：
 ```css
