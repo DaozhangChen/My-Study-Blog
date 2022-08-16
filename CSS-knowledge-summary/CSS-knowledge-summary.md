@@ -62,11 +62,11 @@ transform:rotateX(45deg);(沿着X轴顺时针旋转45°)
 transform:rotateY(45deg);(沿着y轴顺时针旋转45°)
 ```
 Z轴旋转图如下：    
-![](./picture/rotateZ.gif)
+![](./picture/rotateZ.gif)  
 X轴旋转图如下：  
-![](./picture/rotateX.gif)
+![](./picture/rotateX.gif)  
 Y轴旋转图如下：  
-![](./picture/rotateY.gif)
+![](./picture/rotateY.gif)  
 #### skew 倾斜
 skew用法如下：
 ```css
