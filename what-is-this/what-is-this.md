@@ -1,4 +1,5 @@
 # JS中的this
+
 ## 为什么要使用this
 关于什么是this，首先要知道使用this会解决什么问题。  
 我们先创建一个对象：  
@@ -81,7 +82,7 @@ girl.woman.detail()为什么打印出小黄？
 
 girl.special()为什么打印出小红？  
 因为此时调用的是girl中的special方法，girl.special采用了之前声明的special函数，文中可以等价于将special函数的内容全部搬进girl对象中，那么此时调用special，就是在girl对象中调用special（这句话好像重复了。。），那么这个方法中的this就自然是指向girl中的name了。
----
+
 还有下一道题：
 ```javascript
 var name='小红'
@@ -138,6 +139,6 @@ call和apply的区别在于，call和bind传入的参数是多个单独的变量
 语法如下：  
 ```javascript
 function.call(thisArg, arg1, arg2, ...)
-apply(thisArg, argsArray)
+function.apply(thisArg, argsArray)
 function.bind(thisArg[, arg1[, arg2[, ...]]])
 ```
