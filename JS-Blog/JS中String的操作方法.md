@@ -126,5 +126,36 @@ split用于分割匹配的字符串变为一个数组，接受两个参数，第
 ```javascript
 let a = 'cat,bat,sat,fat'
 a.split(,)     //['cat','bat','sat','fat']
-a.split(,,2)   //['cat','bat']
+a.split(',',2)   //['cat','bat']
 ```
+# 其他方法
+## normalize
+normalize方法不是很常用，可以看看MDN上面的内容。
+[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/normalize)
+## trim
+trim方法可以字符串前后的所有空格  
+trimLeft和trimRight分别删除字符长左边和右边的所有空格字符。
+```javascript
+let a = '   hello world   '
+a.trim()      //'hello world'
+a.trimLeft()  //'hello world   '   
+a.trimRight() //'   hello world'
+```
+## repeat
+repeat方法接受一个整数参数，把要求的字符串按参数的数字进行复制，返回一个复制后合成一体的新字符串
+```javascript
+let a = 're'
+a.repeat(4)   //'rererere'
+```
+## localeCompare
+这个方法可以比较两个字符串，返回如下三个值：  
+* 如果按字母表排序，字符串应该排在字符串参数前，返回负值
+* 如果字符串参数相等，返回0
+* 如果字符串排在字符串参数后，返回正值
+```javascript
+let a = 'yellow'
+a.localeCompare('brick')    //1
+a.localeCompare('yellow')   //0
+a.localeCompare('zoo')      //-1
+```
+
