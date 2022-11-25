@@ -41,3 +41,95 @@ for-in和for-of都是用来对对象进行遍历的，但是for-in适合普通�
 1. 只接受对象作为键名，不接受其他类型的值作为键名
 2. 键名指向的对象，不计入垃圾回收机制
 3. 不能遍历
+
+# 关于内存泄露
+内存泄露指的是当已经不需要某块内存时，这块内存还存在着，没有被释放或者说没有被垃圾回收，导致了内存占用越来越高，这样的现象就是内存泄露。  
+在JS中有几种常见的内存泄露的情况  
+1. 意外的全局变量
+
+```javascript
+function foo(arg) {
+    bar = "this is a hidden global variable";
+}
+//或者由this创建的全局变量
+function foo() {
+    this.variable = "potential accidental global";
+}
+// foo 调用自己，this 指向了全局对象（window）
+foo();
+```
+2. 不规范的使用闭包
+
+```javascript
+function bindEvent() {
+  var obj = document.createElement('XXX');
+  var unused = function () {
+    console.log(obj, '闭包内引用obj obj不会被释放');
+  };
+  obj = null; // 解决方法
+}
+```
+3. 未被清空的定时器
+
+```javascript
+var someResource = getData();
+setInterval(function() {
+    var node = document.getElementById('Node');
+    if(node) {
+        // 处理 node 和 someResource
+        node.innerHTML = JSON.stringify(someResource);
+    }
+}, 1000);
+```
+4. 未被销毁的事件监听
+
+```javascript
+componentDidMount(){
+    window.addEventListener("resize", this.onResize);
+}
+componentWillUnmount(){
+  // 忘记remove EventListener
+}
+```
+5. DOM引用
+
+```javascript
+const refA = document.getElementById('refA');
+document.body.removeChild(refA); // dom删除了
+console.log(refA, 'refA'); // 但是还存在引用能console出整个div 没有被回收
+refA = null;
+console.log(refA, 'refA'); // 解除引用
+```
+# 垃圾回收的机制
+垃圾回收是JS中特殊的一个释放内存的方式，垃圾收集器会定期（周期性）的找出那些不再继续使用的变量，然后释放内存。  
+通常有两种实现的方式：
+* 标记清除
+* 引用计数
+
+### 标记清除
+标记清除是JS中**最常用**的垃圾回收策略，当变量进入上下文，比如在函数内部声明一个变量是，这个变量会被加上存在于上下文中的标记，当变量离开上下文时，也会被加上离开上下文的标记。  
+在垃圾回收程序运行时，会标记内存中储存的所有变量，然后会将处在上下文中的变量以及上下文引用的变量的标记去掉，再次之后再被加上标记的变量就是待删除的，随后垃圾回收程序做一次内存清理，销毁带标记的所有值并且回收他们的内存。
+```javascript
+var m = 0,n = 19 // 把 m,n,add() 标记为进入环境。
+add(m, n) // 把 a, b, c标记为进入环境。
+console.log(n) // a,b,c标记为离开环境，等待垃圾回收。
+function add(a, b) {
+  a++
+  var c = a + b
+  return c
+}
+```
+### 引用计数
+语言引擎有一张"引用表"，保存了内存里面所有的资源（通常是各种值）的引用次数。如果一个值的引用次数是0，就表示这个值不再用到了，因此可以将这块内存释放
+
+如果一个值不再需要了，引用数却不为0，垃圾回收机制无法释放这块内存，从而导致内存泄漏
+```javascript
+const arr = [1, 2, 3, 4];
+```
+上面代码中，数组[1, 2, 3, 4]是一个值，会占用内存。变量arr是仅有的对这个值的引用，因此引用次数为1。尽管后面的代码没有用到arr，它还是会持续占用内存
+
+如果需要这块内存被垃圾回收机制释放，只需要设置如下：
+```javascript
+arr = null
+```
+通过设置arr为null，就解除了对数组[1,2,3,4]的引用，引用次数变为 0，就被垃圾回收了  
